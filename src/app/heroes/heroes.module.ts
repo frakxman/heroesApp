@@ -10,6 +10,7 @@ import { NewPageComponent } from './pages/new-page/new-page.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { HeroCardComponent } from './components/hero-card/hero-card.component';
+import { HeroeImagePipe } from './pipes/heroe-image.pipe';
 
 
 @NgModule({
@@ -19,7 +20,10 @@ import { HeroCardComponent } from './components/hero-card/hero-card.component';
     NewPageComponent,
     SearchPageComponent,
     LayoutPageComponent,
-    HeroCardComponent
+    HeroCardComponent,
+    
+    // Pipes 
+    HeroeImagePipe
   ],
   imports: [
     CommonModule,
