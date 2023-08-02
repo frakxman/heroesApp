@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 
 import { environments } from 'src/environments/environment';
 
@@ -15,23 +15,41 @@ export class HeroesService {
 
   constructor( private http: HttpClient ) { }
 
-  // Get all Heroes 
+  // Method to get all Heroes 
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(`${ this.baseUrl}/heroes`)
-      // .subscribe( heroes => {
-      //   console.log(heroes);
-      // });
+    return this.http.get<Hero[]>(`${ this.baseUrl }/heroes`);
   }
 
-  // Get One Hero
+  // Method to get One Hero
   getHeroById( id: string ): Observable<Hero | undefined> {
-    return this.http.get<Hero>(`${ this.baseUrl}/heroes/${ id }`)
+    return this.http.get<Hero>(`${ this.baseUrl }/heroes/${ id }`)
       .pipe(
         catchError( err => of( undefined ) )
       )
   }
 
+  // Method to autocomplete search bar 
   getSuggestions( query: string ): Observable<Hero[]> {
     return this.http.get<Hero[]>(`${ this.baseUrl }/heroes?q=${ query }&limit=5`);
+  }
+
+  // Method to create new hero
+  addHero( hero: Hero ): Observable<Hero> {
+    return this.http.post<Hero>(`${ this.baseUrl }/heroes`, hero );
+  }
+
+  // Method to update hero
+  updateHero( hero: Hero ): Observable<Hero> {
+    if( !hero.id ) throw Error('Hero id is required');
+    return this.http.patch<Hero>(`${ this.baseUrl }/heroes/${ hero.id }`, hero );
+  }
+
+  // Method to delete hero 
+  deleteHeroById( id: string ): Observable<boolean> {
+    return this.http.delete(`${ this.baseUrl }/heroes/${ id }`)
+      .pipe(
+        catchError( err => of( false ) ),
+        map( resp => true )
+      );
   }
 }
