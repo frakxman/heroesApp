@@ -8,14 +8,14 @@ const routes: Routes = [
   { 
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule ),
-    canActivate: [ canActivateGuardPublic ],
-    canMatch: [ canMatchGuardPublic ]
+    // canActivate: [ canActivateGuardPublic ],
+    // canMatch: [ canMatchGuardPublic ]
   },
   { 
     path: 'heroes',
     loadChildren: () => import('./heroes/heroes.module').then( m => m.HeroesModule ),
-    canActivate: [ canActivateGuard ],
-    canMatch: [ canMatchGuard ]
+    // canActivate: [ canActivateGuard ],
+    // canMatch: [ canMatchGuard ]
   },
   { path: '404', component: ErrorPageComponent },
   { path: '', redirectTo: 'heroes', pathMatch: 'full' },
